@@ -11,7 +11,7 @@ const Home = () => {
 
   const handleSubmit = async () => {
     try {
-      const res = await axios.post('https://safemail-server.onrender.com:5000/api/predict', { email: text });
+      const res = await axios.post('https://safemail-server.onrender.com:10000/api/predict', { email: text });
       setPrediction(res?.data); 
       setSendData(res?.data);
       setText('');

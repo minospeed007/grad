@@ -1,15 +1,20 @@
 import axios from 'axios';
+import CircularProgress from '@mui/material/CircularProgress'; // Import CircularProgress from MUI
+
 import { useState } from 'react';
 import './App.css';
 
 const Home = () => {
   const [sendData, setSendData] = useState('');
   const [success, setSuccess] = useState('');
+  const [loading, setLoading] = useState(false)
 
   const [text, setText] = useState('');
   const [prediction, setPrediction] = useState(null); 
 
   const handleSubmit = async () => {
+    setLoading(true);
+    setText('');
     try {
       const res = await axios.post('https://safemail-server.onrender.com/api/predict', { email: text });
       setPrediction(res?.data); 
@@ -18,6 +23,9 @@ const Home = () => {
 
     } catch (error) {
       console.error("Error in prediction:", error);
+    }
+    finally{
+      setLoading(false);
     }
   };
   
@@ -36,6 +44,11 @@ const Home = () => {
         />
         <button onClick={handleSubmit} className='send-btn'>Send</button>
         </div>
+             {loading && (
+          <div className='loading-div'>
+            <CircularProgress />
+          </div>
+        )}
         <div className='prediction-div'>
           {prediction && (
             <>

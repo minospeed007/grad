@@ -1,5 +1,5 @@
 import axios from 'axios';
-import CircularProgress from '@mui/material/CircularProgress'; // Import CircularProgress from MUI
+import CircularProgress from '@mui/material/CircularProgress'; 
 
 import { useState } from 'react';
 import './App.css';

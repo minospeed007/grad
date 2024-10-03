@@ -1,58 +1,65 @@
 import axios from 'axios';
 import CircularProgress from '@mui/material/CircularProgress'; 
-
 import { useState } from 'react';
 import './App.css';
 
 const Home = () => {
   const [sendData, setSendData] = useState('');
   const [success, setSuccess] = useState('');
-  const [loading, setLoading] = useState(false)
-
+  const [loading, setLoading] = useState(false);
   const [text, setText] = useState('');
   const [prediction, setPrediction] = useState(null); 
 
   const handleSubmit = async () => {
-    setLoading(true);
-    setText('');
+    if (!text.trim()) {
+      alert("Please enter some text");
+      return;
+    }
+
+    setLoading(true); 
+
     try {
       const res = await axios.post('https://safemail-server.onrender.com/api/predict', { email: text });
       setPrediction(res?.data); 
       setSendData(res?.data);
-      setText('');
+      setText(''); 
 
     } catch (error) {
       console.error("Error in prediction:", error);
-    }
-    finally{
-      setLoading(false);
+    } finally {
+      setLoading(false); 
     }
   };
   
   const handleFeedback = async (isCorrect) => {
-   setSuccess(true)
+    setSuccess(true);
   };
 
   return (
     <div className="App">
       <div className='textarea-div'>
         <div className='text-btn-div'>
-        <textarea 
-          placeholder='Type Some Text'
-          className='text-area' 
-          onChange={(e) => setText(e.target.value)} 
-        />
-        <button onClick={handleSubmit} className='send-btn'>Send</button>
+          <textarea 
+            placeholder='Type Some Text'
+            className='text-area' 
+            value={text} 
+            onChange={(e) => setText(e.target.value)} 
+          />
+          <button onClick={handleSubmit} className='send-btn' disabled={loading}>
+            {loading ? 'Sending...' : 'Send'}
+          </button>
         </div>
-             {loading && (
+
+        {loading && (
           <div className='loading-div'>
             <CircularProgress />
           </div>
         )}
+
         <div className='prediction-div'>
           {prediction && (
             <>
-            <h3 > Prediction From Various ML Algorithms</h3>
+              <h3>Prediction From Various ML Algorithms</h3>
               <p>Adaboost: {prediction.Adaboost}</p>
               <p>Logistic Regression: {prediction.LogisticRegression}</p>
               <p>Random Forest: {prediction.RandomForest}</p>

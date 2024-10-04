@@ -37,6 +37,8 @@ const Home = () => {
 
   return (
     <div className="App">
+    <p className='note-p><b>Note:</b> The first response may be slow as the app is hosted on a free tier platform that sleeps when idle. 
+    Please wait for the server to respond.</p>
       <div className='textarea-div'>
         <div className='text-btn-div'>
           <textarea 

@@ -74,7 +74,7 @@ const Home = () => {
         {prediction !== null && ( 
           <div className='feedback-div'>
             <div className='feedback-text-div'>
-              <h2>Your Feedback Helps Us Improve Our Prediction</h2>
+              <h2>Your Feedback Helps Us To Improve On Our Prediction</h2>
             </div>
             <div className='button-div'>
               {success && (
